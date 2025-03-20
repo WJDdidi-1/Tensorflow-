@@ -196,3 +196,43 @@ TF2.x 移除了 TF1.x 中大量冗余或不一致的 API（例如 tf.app, tf.fla
 ---
 # 总结
 TensorFlow 2.x 强调易用性和与实践接轨的简洁接口，如利用 Keras 迅速构建模型、即时执行便于调试、自动微分与自定义训练更灵活，同时保留了通过 tf.function 获得高性能的选项。掌握上述核心概念和常用接口，有助于高效地使用 TensorFlow 进行深度学习模型的开发与部署。各知识点在实践中可结合官方文档和示例进一步加深理解.
+
+---
+
+# 具体实例（expression detection）
+通过实际的例子可以快速理解tensorflow的入门和使用，这是一个用tensorflow训练开放数据集，并调用电脑摄像头的例子，我使用的是MacOS，如果有需要可以自行更改。
+
+---
+## Import 需要用到的函数等，由于会要调用摄像头，所以我们这里调用了opencv：
+```python
+import os
+import numpy as np
+import tensorflow as tf
+import cv2
+import matplotlib.pyplot as plt
+import requests
+import zipfile
+
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activation, MaxPooling2D, Dropout, Flatten, Dense
+from tensorflow.keras.callbacks import ReduceLROnPlateau, ModelCheckpoint
+from sklearn.metrics import classification_report, confusion_matrix
+```
+
+下面这部分代码用于导入下载的数据文件，并对其进行解压。这部分代码按需使用。我是因为使用colab来做的示范，所以多出这一步用于解压文件以进行后续训练：
+```python
+print("TensorFlow version:", tf.__version__)
+zip_file = "/archive.zip"  # 修改为你的文件路径
+extract_folder = "/content/extracted_folder"
+
+with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+    zip_ref.extractall(extract_folder)
+
+print("解压完成！")
+```
+
+
+
+
+
